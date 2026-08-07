@@ -1,0 +1,99 @@
+<view class="sh-page">
+  <view class="sh-hero">
+    <text class="sh-hero-title">智居</text>
+    <text class="sh-hero-sub">家庭设备中枢 · 更接近主流智能家居小程序的操作体验</text>
+    <text class="sh-hero-meta">{{hasGateway ? ('网关：' + gatewayName) : '尚未绑定网关，请先去设备发现页'}}</text>
+  </view>
+
+  <view class="sh-card">
+    <view class="sh-card-hd">
+      <text class="sh-card-title">家庭状态总览</text>
+      <text class="sh-card-sub">{{homeSummary}}{{lastSyncText ? (' · 最近同步 ' + lastSyncText) : ''}}</text>
+    </view>
+    <view class="home-guide">
+      <text class="home-guide-title">新手三步</text>
+      <text class="home-guide-item">{{hasGateway ? '✓' : '1'}} 连接网关（设备管理）</text>
+      <text class="home-guide-item">{{remoteReady ? '✓' : '2'}} 获取同步（打开远程控制）</text>
+      <text class="home-guide-item">{{switchOnCount > 0 ? '✓' : '3'}} 开始控制（回家/离家/温度）</text>
+    </view>
+    <view class="home-stats">
+      <view class="home-stat">
+        <text class="home-stat-label">在线能力</text>
+        <text class="home-stat-value">{{remoteReady ? '已同步' : '离线/未同步'}}</text>
+      </view>
+      <view class="home-stat">
+        <text class="home-stat-label">开关运行中</text>
+        <text class="home-stat-value">{{switchOnCount}} / 3</text>
+      </view>
+      <view class="home-stat">
+        <text class="home-stat-label">空调设定</text>
+        <text class="home-stat-value">{{tempScreen3}}°C</text>
+      </view>
+      <view class="home-stat">
+        <text class="home-stat-label">地暖设定</text>
+        <text class="home-stat-value">{{tempScreen5}}°C</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="home-grid">
+    <view class="home-tile" hover-class="home-tile-hover" bindtap="goPage" data-url="/pages/discovery/discovery">
+      <view class="home-tile-icon">📡</view>
+      <view class="home-tile-body">
+        <text class="home-tile-title">设备管理</text>
+        <text class="home-tile-desc">扫描与绑定网关，管理当前设备入口</text>
+      </view>
+      <text class="home-tile-arrow">›</text>
+    </view>
+
+    <view class="home-tile" hover-class="home-tile-hover" bindtap="goPage" data-url="/pages/near/near">
+      <view class="home-tile-icon">📶</view>
+      <view class="home-tile-body">
+        <text class="home-tile-title">近场控制</text>
+        <text class="home-tile-desc">BLE 直连，低延迟联动开关/配网</text>
+      </view>
+      <text class="home-tile-arrow">›</text>
+    </view>
+
+    <view class="home-tile" hover-class="home-tile-hover" bindtap="goPage" data-url="/pages/remote/remote">
+      <view class="home-tile-icon">☁️</view>
+      <view class="home-tile-body">
+        <text class="home-tile-title">远程控制</text>
+        <text class="home-tile-desc">MQTT 云端同步与状态回传</text>
+      </view>
+      <text class="home-tile-arrow">›</text>
+    </view>
+
+    <view class="home-tile" hover-class="home-tile-hover" bindtap="goPage" data-url="/pages/mesh/mesh">
+      <view class="home-tile-icon">🔗</view>
+      <view class="home-tile-body">
+        <text class="home-tile-title">Mesh 配网</text>
+        <text class="home-tile-desc">一键开关 PB-ADV 广播</text>
+      </view>
+      <text class="home-tile-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="home-foot">
+    <navigator url="/pages/logs/logs" open-type="navigate" class="home-foot-link">调试日志</navigator>
+  </view>
+
+  <view class="sh-bottom-nav">
+    <navigator url="/pages/index/index" open-type="reLaunch" class="sh-bottom-nav-item active">
+      <text class="sh-bottom-nav-icon">◉</text>
+      <text class="sh-bottom-nav-label">设备</text>
+    </navigator>
+    <navigator url="/pages/discovery/discovery" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◎</text>
+      <text class="sh-bottom-nav-label">发现</text>
+    </navigator>
+    <navigator url="/pages/remote/remote" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◌</text>
+      <text class="sh-bottom-nav-label">模式</text>
+    </navigator>
+    <navigator url="/pages/logs/logs" open-type="navigate" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◍</text>
+      <text class="sh-bottom-nav-label">我的</text>
+    </navigator>
+  </view>
+</view>

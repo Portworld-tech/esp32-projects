@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/discovery/discovery",
+    "pages/near/near",
+    "pages/remote/remote",
+    "pages/mesh/mesh",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#e8ecf2",
+    "navigationBarBackgroundColor": "#0f172a",
+    "navigationBarTitleText": "智居",
+    "navigationBarTextStyle": "white"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

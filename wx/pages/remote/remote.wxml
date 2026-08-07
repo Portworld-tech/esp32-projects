@@ -1,0 +1,186 @@
+<view class="page-remote">
+  <view class="hero">
+    <text class="hero-title">云端遥控</text>
+    <text class="hero-desc">经巴法 MQTT 与设备同步</text>
+    <view class="hero-mode">
+      <text class="hero-mode-text">{{expertMode ? '专家模式' : '简洁模式（推荐）'}}</text>
+      <button class="mode-btn" size="mini" bindtap="toggleExpertMode">{{expertMode ? '切到简洁' : '切到专家'}}</button>
+    </view>
+    <view class="hero-pills">
+      <view class="pill {{mqttConnected ? 'pill-on' : 'pill-off'}}">
+        <view class="pill-dot" />
+        <text>{{mqttConnected ? 'MQTT 已连接' : 'MQTT 未连接'}}</text>
+      </view>
+      <view class="pill pill-muted">
+        <text>{{cloudHost}}:{{cloudPort}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-hd">
+      <text class="card-title">场景快捷</text>
+      <text class="card-sub">模拟主流智能家居入口：一键回家 / 离家</text>
+    </view>
+    <view class="scene-grid">
+      <button class="scene-btn scene-home" size="mini" bindtap="sceneGoHome">回家模式</button>
+      <button class="scene-btn scene-away" size="mini" bindtap="sceneGoAway">离家模式</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-hd">
+      <text class="card-title">开关</text>
+      <text class="card-sub">与设备 item 1 / 2 / 3 对应</text>
+    </view>
+    <view class="sw-list">
+      <view class="sw-row" bindtap="toggleSw4">
+        <view class="sw-info">
+          <text class="sw-name">{{alias1}}</text>
+          <text class="sw-meta">item 1</text>
+        </view>
+        <view class="toggle {{switchStates[1] ? 'toggle-on' : ''}}">
+          <view class="toggle-knob" />
+        </view>
+      </view>
+      <view class="sw-row" bindtap="toggleSw3">
+        <view class="sw-info">
+          <text class="sw-name">{{alias2}}</text>
+          <text class="sw-meta">item 2</text>
+        </view>
+        <view class="toggle {{switchStates[2] ? 'toggle-on' : ''}}">
+          <view class="toggle-knob" />
+        </view>
+      </view>
+      <view class="sw-row" bindtap="toggleSw1">
+        <view class="sw-info">
+          <text class="sw-name">{{alias3}}</text>
+          <text class="sw-meta">item 3</text>
+        </view>
+        <view class="toggle {{switchStates[3] ? 'toggle-on' : ''}}">
+          <view class="toggle-knob" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-hd">
+      <text class="card-title">温度步进</text>
+      <text class="card-sub">与终端屏 3（空调）/ 屏 5（地暖）设定温度同步；关机后不可调{{syncStale ? ' · 等待同步' : ''}}</text>
+    </view>
+    <view class="step-grid">
+      <view class="step-cell">
+        <view class="step-label-col">
+          <text class="step-label">屏 3 · 空调</text>
+          <text class="step-temp">{{tempScreen3}}°C</text>
+          <text class="step-hint" wx:if="{{!allowTemp3}}">整机已关，与终端一致不可调温</text>
+        </view>
+        <view class="step-btns">
+          <button class="btn-ghost" size="mini" disabled="{{!allowTemp3}}" bindtap="stepTemp3Down">−1</button>
+          <button class="btn-primary" size="mini" disabled="{{!allowTemp3}}" bindtap="stepTemp3Up">+1</button>
+        </view>
+      </view>
+      <view class="step-cell">
+        <view class="step-label-col">
+          <text class="step-label">屏 5 · 地暖</text>
+          <text class="step-temp">{{tempScreen5}}°C</text>
+          <text class="step-hint" wx:if="{{!allowTemp5}}">整机已关，与终端一致不可调温</text>
+        </view>
+        <view class="step-btns">
+          <button class="btn-ghost" size="mini" disabled="{{!allowTemp5}}" bindtap="stepTemp5Down">−1</button>
+          <button class="btn-primary" size="mini" disabled="{{!allowTemp5}}" bindtap="stepTemp5Up">+1</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-hd">
+      <text class="card-title">Mesh 配网</text>
+      <text class="card-sub">item 10 · 开启后网关广播 Provisioning</text>
+    </view>
+    <view class="sw-row" bindtap="toggleMeshProv">
+      <view class="sw-info">
+        <text class="sw-name">配网开关</text>
+        <text class="sw-meta">{{meshProvEnabled ? '进行中' : '已关闭'}}</text>
+      </view>
+      <view class="toggle {{meshProvEnabled ? 'toggle-on' : ''}}">
+        <view class="toggle-knob" />
+      </view>
+    </view>
+  </view>
+
+  <view class="card card-feed" wx:if="{{expertMode}}">
+    <view class="card-hd card-hd-row">
+      <view>
+        <text class="card-title">状态上行</text>
+        <text class="card-sub">订阅 {{statusTopic}}</text>
+      </view>
+      <text class="feed-time-hd" wx:if="{{lastRxTimeStr}}">{{lastRxTimeStr}}</text>
+    </view>
+    <view class="summary-line" wx:if="{{lastStatusSummary}}">{{lastStatusSummary}}</view>
+    <scroll-view scroll-y class="feed-scroll">
+      <block wx:for="{{statusFeed}}" wx:key="ts">
+        <view class="feed-item">
+          <text class="feed-ts">{{item.timeStr}}</text>
+          <view class="feed-main">
+            <text class="feed-sum">{{item.summary}}</text>
+            <text class="feed-raw">{{item.topicShort}} · {{item.raw}}</text>
+          </view>
+        </view>
+      </block>
+      <view class="feed-empty" wx:if="{{statusFeed.length === 0}}">暂无上行，下发指令或等待设备上报</view>
+    </scroll-view>
+  </view>
+
+  <view class="adv-bar" wx:if="{{expertMode}}" bindtap="toggleAdvanced">
+    <text class="adv-bar-text">{{showAdvanced ? '▼ 收起连接与主题配置' : '▶ 连接与主题配置'}}</text>
+  </view>
+
+  <view class="card" wx:if="{{expertMode && showAdvanced}}">
+    <view class="card-hd">
+      <text class="card-title">MQTT 与主题</text>
+      <text class="card-sub">{{mqttStateText}}</text>
+    </view>
+    <view class="field">
+      <text class="field-label">CMD 主题</text>
+      <input class="field-input" placeholder="CMD topic" value="{{cmdTopicInput}}" bindinput="onCmdTopicInput" />
+    </view>
+    <view class="field">
+      <text class="field-label">STATUS 主题</text>
+      <input class="field-input" placeholder="STATUS topic" value="{{statusTopicInput}}" bindinput="onStatusTopicInput" />
+    </view>
+    <view class="field">
+      <text class="field-label">WebSocket URL</text>
+      <input class="field-input" placeholder="wss://..." value="{{wsUrlInput}}" bindinput="onWsUrlInput" />
+    </view>
+    <view class="btn-row">
+      <button class="btn-primary wide" size="default" bindtap="applyTopicConfig">保存并重连</button>
+      <button class="btn-ghost wide" size="default" bindtap="checkTopics">检查主题</button>
+    </view>
+    <view class="hint-block" wx:if="{{topicCheckText}}">{{topicCheckText}}</view>
+    <view class="hint-block mono" wx:if="{{lastStatusRaw}}">原始：{{lastStatusRaw}}</view>
+  </view>
+
+  <view class="footer-space" />
+
+  <view class="sh-bottom-nav">
+    <navigator url="/pages/index/index" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◉</text>
+      <text class="sh-bottom-nav-label">设备</text>
+    </navigator>
+    <navigator url="/pages/discovery/discovery" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◎</text>
+      <text class="sh-bottom-nav-label">发现</text>
+    </navigator>
+    <navigator url="/pages/remote/remote" open-type="reLaunch" class="sh-bottom-nav-item active">
+      <text class="sh-bottom-nav-icon">◌</text>
+      <text class="sh-bottom-nav-label">模式</text>
+    </navigator>
+    <navigator url="/pages/logs/logs" open-type="navigate" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◍</text>
+      <text class="sh-bottom-nav-label">我的</text>
+    </navigator>
+  </view>
+</view>

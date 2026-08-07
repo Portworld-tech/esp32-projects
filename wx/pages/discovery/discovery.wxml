@@ -1,0 +1,81 @@
+<view class="sh-page">
+  <view class="sh-hero">
+    <text class="sh-hero-title">设备发现</text>
+    <text class="sh-hero-sub">扫描周围 BLE 广播，连接目标网关以建立近场控制通道</text>
+  </view>
+
+  <view class="sh-card">
+    <view class="sh-card-hd">
+      <text class="sh-card-title">当前网关</text>
+      <text class="sh-card-sub">连接后可直接进入近场控制 / 远程控制 / Mesh 配网</text>
+    </view>
+    <view wx:if="{{currentGateway}}" class="gw-box">
+      <text class="gw-name">{{currentGateway.name || '未命名网关'}}</text>
+      <text class="gw-id">{{currentGateway.deviceId}}</text>
+      <view class="gw-actions">
+        <button class="sh-btn-primary gw-btn" size="mini" bindtap="goNear">近场控制</button>
+        <button class="sh-btn-secondary gw-btn" size="mini" bindtap="goRemote">远程控制</button>
+        <button class="sh-btn-ghost gw-btn" size="mini" bindtap="goMesh">Mesh 配网</button>
+        <button class="sh-btn-ghost gw-btn" size="mini" bindtap="clearCurrentGateway">解除绑定</button>
+      </view>
+    </view>
+    <view wx:else class="sh-muted" style="padding: 8rpx 0 4rpx;">暂无已绑定网关，先从下方列表选择连接</view>
+  </view>
+
+  <view class="sh-card">
+    <view class="sh-card-hd">
+      <text class="sh-card-title">扫描</text>
+      <text class="sh-card-sub">建议先打开系统蓝牙；仅网关模式可过滤杂项设备</text>
+    </view>
+    <view class="sh-toolbar">
+      <button class="sh-btn-primary" bindtap="startScan" disabled="{{scanning}}">开始扫描</button>
+      <button class="sh-btn-secondary" bindtap="stopScan" disabled="{{!scanning}}">停止扫描</button>
+      <button class="sh-btn-ghost" bindtap="toggleGatewayFilter">
+        {{onlyShowGateway ? '仅显示网关' : '显示全部设备'}}
+      </button>
+    </view>
+    <view class="sh-hint" style="margin-top: 16rpx; text-align: center;">{{scanHint}}</view>
+  </view>
+
+  <view class="sh-card">
+    <view class="sh-card-hd">
+      <text class="sh-card-title">设备列表</text>
+      <text class="sh-card-sub" wx:if="{{devices.length > 0}}">共 {{devices.length}} 台</text>
+    </view>
+
+    <view wx:if="{{devices.length === 0}}" class="sh-muted" style="text-align:center;padding:32rpx 0;">
+      暂无设备，请先开始扫描
+    </view>
+
+    <view wx:for="{{devices}}" wx:key="deviceId" class="sh-device">
+      <view style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12rpx;">
+        <text style="font-size:30rpx;font-weight:600;color:#0f172a;">{{item.name || '未知设备'}}</text>
+        <text class="sh-badge {{item.isGateway ? 'sh-badge-ok' : ''}}">{{item.isGateway ? '网关' : 'BLE'}}</text>
+      </view>
+      <view class="sh-device-line sh-device-meta">RSSI {{item.rssi}} dBm</view>
+      <view class="sh-device-line sh-device-meta" style="font-size:22rpx;">{{item.deviceId}}</view>
+      <view style="margin-top: 20rpx;">
+        <button class="sh-btn-primary" size="mini" bindtap="connectDevice" data-device-id="{{item.deviceId}}">连接</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="sh-bottom-nav">
+    <navigator url="/pages/index/index" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◉</text>
+      <text class="sh-bottom-nav-label">设备</text>
+    </navigator>
+    <navigator url="/pages/discovery/discovery" open-type="reLaunch" class="sh-bottom-nav-item active">
+      <text class="sh-bottom-nav-icon">◎</text>
+      <text class="sh-bottom-nav-label">发现</text>
+    </navigator>
+    <navigator url="/pages/remote/remote" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◌</text>
+      <text class="sh-bottom-nav-label">模式</text>
+    </navigator>
+    <navigator url="/pages/logs/logs" open-type="navigate" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◍</text>
+      <text class="sh-bottom-nav-label">我的</text>
+    </navigator>
+  </view>
+</view>

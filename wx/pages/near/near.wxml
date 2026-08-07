@@ -1,0 +1,68 @@
+<view class="sh-page">
+  <view class="sh-hero">
+    <text class="sh-hero-title">近场控制</text>
+    <text class="sh-hero-sub">通过 BLE 直连网关，适合在家低延迟操作</text>
+    <text class="sh-hero-meta">{{gatewayName || '未选择网关'}} · {{connected ? '已连接' : '未连接'}}</text>
+    <text class="sh-hero-meta" wx:if="{{syncHint}}" style="margin-top:12rpx;">{{syncHint}}</text>
+  </view>
+
+  <view class="sh-card">
+    <text class="sh-hint">写入控制前可能需要完成配对/加密，请按系统提示操作。开关状态会写入本机，下次进入自动还原（以设备实际状态为准）。</text>
+  </view>
+
+  <view class="sh-card">
+    <view class="sh-card-hd">
+      <text class="sh-card-title">开关</text>
+      <text class="sh-card-sub">与云端 item 1 / 2 / 3 一致</text>
+    </view>
+    <view class="near-sw" bindtap="toggleSwitch" data-item="3">
+      <view class="near-sw-info">
+        <text class="near-sw-name">{{alias3}}</text>
+        <text class="near-sw-meta">item 3</text>
+      </view>
+      <view class="near-toggle {{switchStates[3] ? 'on' : ''}}">
+        <view class="near-knob" />
+      </view>
+    </view>
+    <view class="near-sw" bindtap="toggleSwitch" data-item="2">
+      <view class="near-sw-info">
+        <text class="near-sw-name">{{alias2}}</text>
+        <text class="near-sw-meta">item 2</text>
+      </view>
+      <view class="near-toggle {{switchStates[2] ? 'on' : ''}}">
+        <view class="near-knob" />
+      </view>
+    </view>
+    <view class="near-sw" bindtap="toggleSwitch" data-item="1">
+      <view class="near-sw-info">
+        <text class="near-sw-name">{{alias1}}</text>
+        <text class="near-sw-meta">item 1</text>
+      </view>
+      <view class="near-toggle {{switchStates[1] ? 'on' : ''}}">
+        <view class="near-knob" />
+      </view>
+    </view>
+    <view style="margin-top: 20rpx;">
+      <text class="sh-hint">最近 ACK：{{lastAck || '—'}}</text>
+    </view>
+  </view>
+
+  <view class="sh-bottom-nav">
+    <navigator url="/pages/index/index" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◉</text>
+      <text class="sh-bottom-nav-label">设备</text>
+    </navigator>
+    <navigator url="/pages/discovery/discovery" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◎</text>
+      <text class="sh-bottom-nav-label">发现</text>
+    </navigator>
+    <navigator url="/pages/near/near" open-type="reLaunch" class="sh-bottom-nav-item active">
+      <text class="sh-bottom-nav-icon">◌</text>
+      <text class="sh-bottom-nav-label">模式</text>
+    </navigator>
+    <navigator url="/pages/logs/logs" open-type="navigate" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◍</text>
+      <text class="sh-bottom-nav-label">我的</text>
+    </navigator>
+  </view>
+</view>

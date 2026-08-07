@@ -1,0 +1,60 @@
+/* 近场页：滑块与 remote 页风格一致 */
+
+.near-sw {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 20rpx;
+  margin-top: 12rpx;
+  background: #f8fafc;
+  border-radius: 16rpx;
+  border: 1rpx solid #e2e8f0;
+}
+
+.near-sw:first-of-type {
+  margin-top: 0;
+}
+
+.near-sw-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.near-sw-name {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #334155;
+}
+
+.near-sw-meta {
+  font-size: 22rpx;
+  color: #94a3b8;
+}
+
+.near-toggle {
+  width: 96rpx;
+  height: 52rpx;
+  border-radius: 26rpx;
+  background: #cbd5e1;
+  position: relative;
+}
+
+.near-toggle.on {
+  background: linear-gradient(135deg, #34d399, #10b981);
+}
+
+.near-knob {
+  position: absolute;
+  width: 44rpx;
+  height: 44rpx;
+  top: 4rpx;
+  left: 4rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.12);
+}
+
+.near-toggle.on .near-knob {
+  left: 48rpx;
+}

@@ -1,0 +1,30 @@
+# Hub theme contract checklist (P2)
+# For each ThemeHub click path: expect mutate (M) or navigate (N).
+
+HOME
+  [ ] clock shows live HH:MM
+  [ ] room tile / list → N ROOM (with room_idx set)
+  [ ] scene CTA / capsules / SCENE_* → M apply_scene + refresh
+  [ ] protocol bar / pill (Ocean) → M toggle_proto
+  [ ] Ink matrix cell → M toggle_zone
+  [ ] quickbar 情景/安防/日程/设置 → N
+  [ ] Forest Eco / energy ring → N ENERGY
+  [ ] Forest 室内/湿度 → N HVAC
+  [ ] Ocean 点表 → N POINTS
+  [ ] Dusk/Zen security chip → N SECURITY
+  [ ] Metro tiles: rooms M/N room, 情景/总线/能耗/安防 N, header 设置 N
+  [ ] Pulse HUD bevel visible; SCENE_HOME/AWAY M
+
+PAGES
+  [ ] ROOM: ceiling/strip/heat toggle M; curtain ± M; AC ± M
+  [ ] SCENES: exclusive active + apply M
+  [ ] GATEWAY: tap row M toggle
+  [ ] SECURITY: 布防/撤防 M; PIN 1234 → disarm M
+  [ ] SCHEDULE: row tap → apply scene M
+  [ ] HVAC: ± setpoint M
+  [ ] POINTS: tap toggles or N ROOM
+  [ ] SETTINGS: 温控→HVAC, 点表→POINTS, 日程→SCHEDULE
+
+PACK
+  [ ] Only ui/themes/<id>/theme_pack.c linked (palette+UI+app_ui_start)
+  [ ] idf.py reconfigure && build for current APP_UI_THEME_ID

@@ -1,0 +1,12 @@
+﻿build/
+managed_components/
+dependencies.lock
+sdkconfig
+sdkconfig.old
+*.elf
+*.map
+*.bin
+!spiffs_image/
+.vscode/
+.idea/
+__pycache__/

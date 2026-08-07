@@ -1,0 +1,31 @@
+.log-card {
+  padding: 20rpx 24rpx 28rpx;
+}
+
+.log-line {
+  display: flex;
+  gap: 16rpx;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f1f5f9;
+  align-items: flex-start;
+}
+
+.log-line:last-child {
+  border-bottom: none;
+}
+
+.log-idx {
+  font-size: 22rpx;
+  color: #94a3b8;
+  width: 40rpx;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.log-text {
+  font-size: 24rpx;
+  color: #334155;
+  line-height: 1.5;
+  word-break: break-all;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

@@ -1,0 +1,3 @@
+﻿# Pin / board GPIO menus intentionally omitted from the public share.
+# Local product builds use the private main/Kconfig.projbuild + board defaults.
+# Application code talks to board_* APIs only (see components/board_adapter_stub).

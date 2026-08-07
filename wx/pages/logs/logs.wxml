@@ -1,0 +1,35 @@
+<view class="sh-page">
+  <view class="sh-hero">
+    <text class="sh-hero-title">调试日志</text>
+    <text class="sh-hero-sub">启动与运行期日志条目（仅开发排查）</text>
+  </view>
+
+  <view class="sh-card log-card">
+    <block wx:for="{{logs}}" wx:for-item="log" wx:for-index="idx" wx:key="idx">
+      <view class="log-line">
+        <text class="log-idx">{{idx + 1}}</text>
+        <text class="log-text">{{log}}</text>
+      </view>
+    </block>
+    <view wx:if="{{logs.length === 0}}" class="sh-muted" style="text-align:center;padding:40rpx 0;">暂无日志</view>
+  </view>
+
+  <view class="sh-bottom-nav">
+    <navigator url="/pages/index/index" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◉</text>
+      <text class="sh-bottom-nav-label">设备</text>
+    </navigator>
+    <navigator url="/pages/discovery/discovery" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◎</text>
+      <text class="sh-bottom-nav-label">发现</text>
+    </navigator>
+    <navigator url="/pages/remote/remote" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◌</text>
+      <text class="sh-bottom-nav-label">模式</text>
+    </navigator>
+    <navigator url="/pages/logs/logs" open-type="reLaunch" class="sh-bottom-nav-item active">
+      <text class="sh-bottom-nav-icon">◍</text>
+      <text class="sh-bottom-nav-label">我的</text>
+    </navigator>
+  </view>
+</view>

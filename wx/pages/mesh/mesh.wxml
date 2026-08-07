@@ -1,0 +1,46 @@
+<view class="sh-page">
+  <view class="sh-hero">
+    <text class="sh-hero-title">Mesh 配网</text>
+    <text class="sh-hero-sub">向已连接的 BLE 网关下发 item=10，开启或关闭 PB-ADV 配网广播</text>
+    <text class="sh-hero-meta">网关：{{gatewayName || '未连接'}}</text>
+  </view>
+
+  <view class="sh-card">
+    <text class="sh-hint" style="margin-bottom: 20rpx; display: block;">
+      请先在「设备发现」中连接目标网关；本页仅控制配网广播开关。
+    </text>
+
+    <view class="mesh-row" bindtap="toggleMeshProv">
+      <view class="mesh-row-info">
+        <text class="mesh-row-title">配网广播</text>
+        <text class="mesh-row-sub">{{meshProvEnabled ? '网关中：Provisioning 广播中' : '已停止'}}</text>
+      </view>
+      <view class="mesh-toggle {{meshProvEnabled ? 'on' : ''}}">
+        <view class="mesh-knob" />
+      </view>
+    </view>
+
+    <view style="margin-top: 24rpx;">
+      <text class="sh-hint">最近 ACK：{{lastAck || '—'}}</text>
+    </view>
+  </view>
+
+  <view class="sh-bottom-nav">
+    <navigator url="/pages/index/index" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◉</text>
+      <text class="sh-bottom-nav-label">设备</text>
+    </navigator>
+    <navigator url="/pages/discovery/discovery" open-type="reLaunch" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◎</text>
+      <text class="sh-bottom-nav-label">发现</text>
+    </navigator>
+    <navigator url="/pages/mesh/mesh" open-type="reLaunch" class="sh-bottom-nav-item active">
+      <text class="sh-bottom-nav-icon">◌</text>
+      <text class="sh-bottom-nav-label">模式</text>
+    </navigator>
+    <navigator url="/pages/logs/logs" open-type="navigate" class="sh-bottom-nav-item">
+      <text class="sh-bottom-nav-icon">◍</text>
+      <text class="sh-bottom-nav-label">我的</text>
+    </navigator>
+  </view>
+</view>
