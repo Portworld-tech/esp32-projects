@@ -1,21 +1,19 @@
-﻿# LVGL Hub 鈥?public software share (no board pins)
+﻿# ESP32 Projects Showcase
 
-This tree is an **analysis / portability** export of the hub application software.
+Organization: **Portworld-tech**  
+Contact: xjunsoftware@ycxytech.com
 
-## Included
-- Hub UI (main/hub_ui), theme packs (ui/themes/*), SPIFFS icons
-- Wi-Fi + Bemfa MQTT client sources
-- Thin components: gui_task, pp_health, BT app API (not full t/ stack)
-- Front-end prototype (lvgl-front), tools, non-pin docs
+Public collection of **ESP32** software samples for analysis and learning. Board pin maps and proprietary BSP are **not** included.
 
-## Excluded on purpose
-- GPIO / pin maps, sdkconfig.board.*.defaults, expander pin headers
-- Product BSP withthewind_board_lvgl_init (replaced by oard_adapter_stub)
-- Legacy Smart-LVGL-main*, firmware bins, partner .a
-- uild/, managed_components/
+## Projects
 
-## Build expectation
-Do **not** expect a flashable binary for our hardware from this tree alone.
-Implement components/board_adapter_stub (or your BSP) and supply board sdkconfig defaults.
+| Folder / tree | Description |
+|---------------|-------------|
+| *(repository root)* | LVGL8 hub UI firmware software layer (themes, Wi‑Fi/MQTT, SPIFFS icons). Replace `board_adapter_stub` with your BSP to run on hardware. |
 
-See docs/GITHUB_SHARE.md.
+More ESP32 demos will be added as separate directories over time.
+
+## Notes
+
+- See `docs/GITHUB_SHARE.md` for what is shared vs excluded.
+- `components/board_adapter_stub` is an API-only stub (no GPIO / pin tables).
